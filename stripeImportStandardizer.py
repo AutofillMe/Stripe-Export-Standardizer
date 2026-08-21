@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 
 import pandas as pd
@@ -30,7 +29,7 @@ def readConfig(path: str = r"./config.txt") -> list[str]:
         print(f"Path to config.txt: {path}")
 
     with open(path, "r") as f:
-        config = [line.strip() for line in f if line.strip()]
+        config: list[str] = [line.strip() for line in f if line.strip()]
     return config
 
 
@@ -51,11 +50,11 @@ def readStripeExport(path: str = r"./export.csv") -> pd.DataFrame:
         )
         print(f"Path to Stripe export: {path}")
 
-    df = pd.read_csv(path)
+    df: pd.DataFrame = pd.read_csv(path)
     return df
 
 
-def cleanStripeExport(df: pd.DataFrame) -> pd.DataFrame:
+def cleanStripeExport(df: pd.DataFrame, config: list[str]) -> pd.DataFrame:
     """
     Task:
     Re-organizes the Stripe Export dataframe into a set order, based on the
@@ -66,9 +65,13 @@ def cleanStripeExport(df: pd.DataFrame) -> pd.DataFrame:
     to the end unordered.
     ---
     IN: dataframe containing the unorganized stripe export (df.DataFrame)
+    IN: list containing ordered column keys (list[str])
     OUT: cleaned dataframe containing the stripe export (pd.DataFrame)
     """
-    # TODO add me
+    configured: list[str] = [col for col in df.columns if col in config]
+    remaining: list[str] = [col for col in df.columns if col not in config]
+
+    df = df.loc[:, configured + remaining]
     return df
 
 
