@@ -1,7 +1,6 @@
 from pathlib import Path
 
 import pandas as pd
-from numpy import diag_indices_from
 
 
 def fileExists(path: str) -> bool:
@@ -20,7 +19,6 @@ def readConfig(path: str = r"./config.txt") -> list[str]:
     IN: path to config.txt (str) default: {pwd}/config.txt
     OUT: ordered list of column keys (list[str])
     """
-    config = []
 
     if not fileExists(path):
         print(
