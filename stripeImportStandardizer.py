@@ -79,15 +79,11 @@ def generateCSV(df: pd.DataFrame) -> None:
 
 
 def main() -> int | None:
-    # TODO add logic
-    # Read config
-    #   - Create a list keys
-    #   - return the list of keys
-    # Read stripe export
-    #   - create a df
-    #   - return df
-    # Standardize
-    # Rebuild
+    # TODO add argparser for optional paths
+    column_config: list[str] = readConfig()
+    dirty_df: pd.DataFrame = readStripeExport()
+    clean_df: pd.DataFrame = cleanStripeExport(dirty_df, column_config)
+    generateCSV(clean_df)
     return 0
 
 
